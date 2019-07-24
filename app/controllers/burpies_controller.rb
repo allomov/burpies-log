@@ -1,10 +1,21 @@
 class BurpiesController < ApplicationController
   before_action :set_burpy, only: [:show, :edit, :update, :destroy]
 
+  before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
+
+  before_action :check_if_user_is_mentor, only: [:create, :update]
+
+  def check_if_user_is_mentor
+    unless current_user.mentor?
+      redirect_to('/', notice: "You should to be a mentor")
+    end
+  end
+
   # GET /burpies
   # GET /burpies.json
   def index
-    @burpies = Burpy.all
+    @burpies = current_user.mentor? ? current_user.burpies_given : current_user.burpies_recieved
   end
 
   # GET /burpies/1
@@ -69,6 +80,18 @@ class BurpiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def burpy_params
-      params.require(:burpy).permit(:reason, :person)
+      burpy_params = params.require(:burpy).permit!
+      student = User.find_by(email: burpy_params[:person])
+
+      {
+        mentor_id: current_user.id,
+        student_id: student.id,
+        reason: burpy_params[:reason]
+      }
+      # params.require(:burpy).permit(:reason, :email)
+    end
+
+    def find_student
+      
     end
 end

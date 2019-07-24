@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Burpies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reason</th>
+      <th>Person</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @burpies.each do |burpy| %>
+      <tr>
+        <td><%= burpy.reason %></td>
+        <td><%= burpy.person %></td>
+        <td><%= link_to 'Show', burpy %></td>
+        <td><%= link_to 'Edit', edit_burpy_path(burpy) %></td>
+        <td><%= link_to 'Destroy', burpy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Burpy', new_burpy_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reason:</strong>
+  <%= @burpy.reason %>
+</p>
+
+<p>
+  <strong>Person:</strong>
+  <%= @burpy.person %>
+</p>
+
+<%= link_to 'Edit', edit_burpy_path(@burpy) %> |
+<%= link_to 'Back', burpies_path %>

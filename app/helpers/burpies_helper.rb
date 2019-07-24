@@ -1,0 +1,2 @@
+module BurpiesHelper
+end
